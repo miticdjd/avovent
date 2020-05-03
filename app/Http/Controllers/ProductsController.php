@@ -55,11 +55,11 @@ class ProductsController
 
     /**
      * Updated existing product in database
-     * @param string $id
+     * @param int $id
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(string $id, Request $request): JsonResponse
+    public function update(int $id, Request $request): JsonResponse
     {
         $validator = $this->validateRequest($request);
 
@@ -81,10 +81,11 @@ class ProductsController
     }
 
     /**
-     * @param string $id
+     * Remove existing product from database
+     * @param int $id
      * @return JsonResponse|object
      */
-    public function remove(string $id)
+    public function remove(int $id)
     {
         Products::findOrFail($id)->delete();
 
@@ -101,7 +102,7 @@ class ProductsController
      */
     private function validateRequest(Request $request): \Illuminate\Contracts\Validation\Validator
     {
-        return $validator = Validator::make($request->all(), [
+        return Validator::make($request->all(), [
             'name' => 'required|max:255',
             'description' => 'nullable|max:255',
             'quantity' => 'required|int'
