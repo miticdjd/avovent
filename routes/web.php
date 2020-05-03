@@ -13,6 +13,9 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/', 'HomeController@welcome');
+
+/** Routes that requires authentication */
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->get('/auth', 'HomeController@welcome');
 });

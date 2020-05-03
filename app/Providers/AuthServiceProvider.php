@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\GenericUser;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Security\Authentication;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,20 +33,11 @@ class AuthServiceProvider extends ServiceProvider
             'api',
             function ($request) {
                 if ($request->input('api_token')) {
-                    switch ($request->input('api_token')) {
-                        case '21232f297a57a5a743894a0e4a801fc3':
-                            return new GenericUser(['id' => 1, 'name' => 'Administrator']);
-                            break;
+                    $authentication = new Authentication();
 
-                        case '8a5da52ed126447d359e70c05721a8aa':
-                            return new GenericUser(['id' => 2, 'name' => 'Site API']);
-                            break;
-
-                        default:
-                            return null;
-                            break;
-                    }
+                    return $authentication->authenticate($request->input('api_token'));
                 }
+
                 return null;
             }
         );
