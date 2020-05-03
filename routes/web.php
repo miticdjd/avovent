@@ -18,4 +18,8 @@ $router->get('/', 'HomeController@welcome');
 /** Routes that requires authentication */
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/auth', 'HomeController@welcome');
+
+    $router->group(['middleware' => 'admin'], function () use ($router) {
+        $router->get('/admin', 'HomeController@welcome');
+    });
 });

@@ -42,6 +42,20 @@ class Authentication
     }
 
     /**
+     * Check if logged in user is administrator
+     * @param GenericUser $user
+     * @return bool
+     */
+    public function isAdministrator(GenericUser $user): bool
+    {
+        if ($user->id === 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get id of user by token
      * @param string $token
      * @return int|null
