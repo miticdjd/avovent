@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  cache:
+    image: redis:3.0-alpine
+
+  db:
+    image: mariadb:10
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+
+  api:
+    container_name: api
+    depends_on:
+      - db
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/api
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_DATABASE: test
+      DB_USERNAME: test
+      DB_PASSWORD: test
+      REDIS_HOST: cache
+
+volumes:
+  db_data:
