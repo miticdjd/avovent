@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Response\BaseResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,11 +23,8 @@ class HomeController extends Controller
      * Display Avovent test message
      * @return JsonResponse
      */
-    public function welcome(Request $request): JsonResponse
+    public function welcome(): JsonResponse
     {
-        $user = $request->user();
-        dd($user);
-
         return (
             new BaseResponse()
         )

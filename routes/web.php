@@ -14,12 +14,14 @@
 */
 
 $router->get('/', 'HomeController@welcome');
+$router->get('/products', 'ProductsController@list');
 
 /** Routes that requires authentication */
 $router->group(['middleware' => 'auth'], function () use ($router) {
-    $router->get('/auth', 'HomeController@welcome');
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
-        $router->get('/admin', 'HomeController@welcome');
+        $router->put('/products', 'ProductsController@add');
+        $router->post('/products/{id}', 'ProductsController@update');
+        $router->delete('/products/{id}', 'ProductsController@remove');
     });
 });
